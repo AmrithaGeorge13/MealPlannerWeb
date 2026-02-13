@@ -29,8 +29,8 @@ public class IngredientController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ApiResponse<IngredientResponse> create(@RequestBody IngredientRequest request) {
-        return ApiResponse.success(ingredientService.create(request));
+    public ApiResponse<List<IngredientResponse>> create(@RequestBody List<IngredientRequest> requests) {
+        return ApiResponse.success(ingredientService.create(requests));
     }
 
     @PutMapping("/{id}")

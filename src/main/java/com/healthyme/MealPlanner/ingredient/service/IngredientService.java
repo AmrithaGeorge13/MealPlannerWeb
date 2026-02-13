@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,11 +38,16 @@ public class IngredientService {
     }
 
     @Transactional
-    public IngredientResponse create(IngredientRequest request) {
-        Ingredient ingredient = new Ingredient();
-        ingredient.setName(request.getName());
-        ingredient.setDefaultUnit(request.getDefaultUnit());
-        return toResponse(ingredientRepository.save(ingredient));
+    public List<IngredientResponse> create(List<IngredientRequest> requests) {
+        List<IngredientResponse> ingredientResponses = new ArrayList<>();
+        for (IngredientRequest ingredientRequest : requests) {
+            Ingredient ingredient = new Ingredient();
+            ingredient.setName(ingredientRequest.getName());
+            ingredient.setDefaultUnit(ingredientRequest.getDefaultUnit());
+            ingredient = ingredientRepository.save(ingredient);
+            ingredientResponses.add(toResponse(ingredient));
+        }
+        return ingredientResponses;
     }
 
     @Transactional

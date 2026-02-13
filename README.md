@@ -40,6 +40,8 @@ A **Meal Planner + Grocery List** backend for families. Plan meals, manage recip
      - Username: `sa`  
      - Password: (leave empty)
 
+4. **API docs:** See **[API-README.md](./API-README.md)** for all GET endpoints (table), POST sample request/response for every resource, and PUT/DELETE reference.
+
 ---
 
 ## Project Structure
@@ -81,16 +83,26 @@ Each feature module follows: **controller → service → repository → model**
 
 ## API Endpoints
 
-All responses use a common wrapper: `{ "success": boolean, "message": "...", "data": ... }`.
+**Base URL:** `http://localhost:8080`  
+**Response wrapper:** `{ "success": boolean, "message": "...", "data": ... }`
 
-| Resource       | Base path           | Methods |
-|----------------|---------------------|--------|
-| Households     | `/api/households`   | GET all, GET /{id}, POST, PUT /{id}, DELETE /{id} |
-| Users          | `/api/users`       | GET all, GET /{id}, POST, PUT /{id}, DELETE /{id} |
-| Ingredients    | `/api/ingredients` | GET all, GET /{id}, POST, PUT /{id}, DELETE /{id} |
-| Recipes        | `/api/recipes`     | GET all, GET /{id}, POST, PUT /{id}, DELETE /{id} |
-| Meal plans     | `/api/meal-plans`  | GET all (optional: `householdId`, `start`, `end`), GET /{id}, POST, PUT /{id}, DELETE /{id} |
-| Grocery lists  | `/api/grocery-lists` | GET all (optional: `householdId`), GET /{id}, POST, PUT /{id}, DELETE /{id} |
+Full request/response samples and all GET endpoints are in **[API-README.md](./API-README.md)**.
+
+### Summary
+
+| Resource       | Base path             | GET list / by id | POST | PUT /{id} | DELETE /{id} |
+|----------------|------------------------|-------------------|------|-----------|---------------|
+| Households     | `/api/households`     | ✓                 | ✓    | ✓         | ✓             |
+| Users          | `/api/users`          | ✓                 | ✓    | ✓         | ✓             |
+| Ingredients    | `/api/ingredients`    | ✓                 | ✓    | ✓         | ✓             |
+| Recipes        | `/api/recipes`        | ✓                 | ✓    | ✓         | ✓             |
+| Meal plans     | `/api/meal-plans`     | ✓ (optional: `householdId`, `start`, `end`) | ✓ | ✓ | ✓ |
+| Grocery lists  | `/api/grocery-lists`  | ✓ (optional: `householdId`) | ✓ | ✓ | ✓ |
+
+- **GET** – List (e.g. `GET /api/households`) or by id (e.g. `GET /api/households/1`).
+- **POST** – Create; request body is JSON (see API-README.md for sample input/output per resource). **Ingredients** POST accepts an array and returns an array (bulk create).
+- **PUT** – Update; same body shape as POST for that resource.
+- **DELETE** – Returns 204 No Content.
 
 **CORS:** Configured in `WebConfig` for `/api/**` (adjust origins/methods in production).
 
